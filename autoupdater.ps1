@@ -1,7 +1,5 @@
-# Zorg dat je script als administrator draait
-# Controleer op updates via Windows Update module
+# Install-Module -Name PSWindowsUpdate
 
-# Laad de Windows Update module
 Import-Module PSWindowsUpdate -ErrorAction SilentlyContinue
 
 if (-not (Get-Command Get-WindowsUpdate -ErrorAction SilentlyContinue)) {
@@ -14,9 +12,9 @@ if (-not (Get-Command Get-WindowsUpdate -ErrorAction SilentlyContinue)) {
 $updates = Get-WindowsUpdate -MicrosoftUpdate -IgnoreUserInput -AcceptAll -ErrorAction SilentlyContinue
 
 if ($updates.Count -eq 0) {
-    Write-Output "✅ Je systeem is up-to-date. Geen updates gevonden."
+    Write-Output "Je systeem is up-to-date. Geen updates gevonden."
 } else {
-    Write-Output "🔔 Er zijn $($updates.Count) update(s) beschikbaar:"
+    Write-Output "Er zijn $($updates.Count) update(s) beschikbaar:"
     $updates | ForEach-Object {
         Write-Output "- $($_.Title)"
     }
