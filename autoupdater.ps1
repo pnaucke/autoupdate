@@ -1,1 +1,1 @@
-test2
+Write-Output "Hello, world!"
