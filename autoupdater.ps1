@@ -1,4 +1,10 @@
-$logFolder = "C:\test"
+$configPath = "C:\Users\piete\autoupdate\autoupdater.json"
+
+$config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
+
+$logFolder = $config.LogFolder
+
+# $logFolder = "C:\test"
 $timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $logPath = Join-Path $logFolder "update-log_$timestamp.log"
 $rebootMsg = "Automatische herstart is ingeschakeld indien vereist door updates."
