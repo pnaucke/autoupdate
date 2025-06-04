@@ -1,15 +1,16 @@
 $logFolder = "C:\test"
+$timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+$logPath = Join-Path $logFolder "update-log_$timestamp.log"
+$rebootMsg = "Automatische herstart is ingeschakeld indien vereist door updates."
+
 if (-not (Test-Path $logFolder)) {
     New-Item -Path $logFolder -ItemType Directory -Force
 }
 
-$timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-$logPath = Join-Path $logFolder "update-log_$timestamp.log"
-
 Import-Module PSWindowsUpdate -ErrorAction SilentlyContinue
 
 if (-not (Get-Command Get-WindowsUpdate -ErrorAction SilentlyContinue)) {
-    $msg = "De PSWindowsUpdate module is niet geïnstalleerd. Installeer deze eerst met:`nInstall-Module -Name PSWindowsUpdate"
+    $msg = "De PSWindowsUpdate module is niet geïnstalleerd. Contacteer een Administrator."
     Write-Output $msg
     Add-Content -Path $logPath -Value $msg
     return
@@ -22,10 +23,10 @@ if ($updates.Count -eq 0) {
     Write-Output $msg
     Add-Content -Path $logPath -Value $msg
 } else {
-    Write-Output "$($updates.Count) update(s) gevonden. Installatie wordt gestart..."
+    Write-Output "$($updates.Count) update(s) gevonden. Installatie wordt gestart."
+    
     $updates | ForEach-Object { Write-Output "- $($_.Title)" }
 
-    $rebootMsg = "Automatische herstart is ingeschakeld indien vereist door updates."
     Write-Output $rebootMsg
     Add-Content -Path $logPath -Value $rebootMsg
 
