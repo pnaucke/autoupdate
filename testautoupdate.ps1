@@ -1,9 +1,7 @@
-$configPath = Join-Path $PSScriptRoot "autoupdater.json"
+Add-Type -AssemblyName PresentationFramework
+[System.Windows.MessageBox]::Show("Auto update wordt gestart")
 
-$config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
-
-$logFolder = $config.LogFolder
-
+$logFolder = "C:\PerfLogs"
 $timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $logPath = Join-Path $logFolder "update-log_$timestamp.log"
 $rebootMsg = "Automatische herstart is ingeschakeld indien vereist door updates."
@@ -29,7 +27,7 @@ if ($updates.Count -eq 0) {
     Add-Content -Path $logPath -Value $msg
 } else {
     Write-Output "$($updates.Count) update(s) gevonden. Installatie wordt gestart."
-
+    
     $updates | ForEach-Object { Write-Output "- $($_.Title)" }
 
     Write-Output $rebootMsg
