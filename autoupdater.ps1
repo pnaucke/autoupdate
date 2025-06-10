@@ -18,8 +18,8 @@ if (-not (Test-Path $logFolder)) {
 Import-Module PSWindowsUpdate -ErrorAction SilentlyContinue
 
 if (-not (Get-Command Get-WindowsUpdate -ErrorAction SilentlyContinue)) {
-    $msg = "De PSWindowsUpdate module is niet geïnstalleerd. Contacteer een beheerder."
-    [System.Windows.MessageBox]::Show("De PSWindowsUpdate module is niet geïnstalleerd. Contacteer een beheerder.")
+    $msg = "De PSWindowsUpdate module is niet geïnstalleerd. Dit wordt nu geïnstalleerd. Druk op Yes bij een melding. Bij vragen contacteer een beheerder."
+    [System.Windows.MessageBox]::Show("De PSWindowsUpdate module is niet geïnstalleerd. Dit wordt nu geïnstalleerd. Druk op Yes bij een melding. Bij vragen contacteer een beheerder.")
     Write-Output $msg
     Add-Content -Path $logPath -Value $msg
     return
